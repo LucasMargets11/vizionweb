@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-white text-slate-900 font-sans antialiased;
+}
+
+a {
+  @apply text-slate-900 transition-colors hover:text-blue-600;
+}
