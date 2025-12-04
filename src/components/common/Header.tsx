@@ -12,25 +12,26 @@ const Header: FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     return (
-        <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-slate-100">
-            <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-                <a href="/" className="flex items-center">
-                    <img src="/icon/vizionblack.png" alt="Vizion Studio" className="h-6 w-auto md:h-7" />
+        <header className="bg-white">
+            <div className="flex w-full items-start justify-between px-6 py-6 md:px-12">
+                <a href="/" className="flex items-center pt-1">
+                    <img src="/icon/logovizion.svg" alt="Vizion Studio" className="h-10 w-auto md:h-14" />
                 </a>
 
-                <div className="hidden items-center gap-8 md:flex">
+                <div className="hidden items-start gap-8 md:flex">
                     <a
                         href="#contact"
-                        className="hidden md:inline-flex items-center gap-3 rounded-full bg-blue-600 px-8 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_40px_rgba(0,87,255,0.35)] hover:bg-blue-700 transition"
+                        className="hidden md:inline-flex items-center gap-3 rounded-2xl bg-blue-600 px-9 py-4 text-sm font-bold uppercase tracking-[0.15em] text-white shadow-[0_10px_20px_rgba(0,87,255,0.25)] hover:bg-blue-700 transition"
                     >
                         SCHEDULE A CALL
-                        <span className="flex h-5 w-8 items-center justify-center rounded-full border border-white/70 text-[9px]">
-                            ▢
-                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-90">
+                            <path d="m22 8-6 4 6 4V8Z"/>
+                            <rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
+                        </svg>
                     </a>
-                    <nav className="hidden flex-col items-end text-right text-[11px] font-semibold tracking-[0.22em] uppercase leading-tight md:flex">
+                    <nav className="hidden flex-col items-start text-left text-xs font-bold tracking-[0.15em] uppercase leading-loose gap-1 md:flex mr-8">
                         {NAV_LINKS.map((link) => (
-                            <a key={link.href} href={link.href} className="hover:text-slate-500 transition-colors">
+                            <a key={link.href} href={link.href} className="hover:text-blue-600 transition-colors">
                                 {link.label}
                             </a>
                         ))}

@@ -9,7 +9,7 @@ import { PortfolioSection } from '../sections/PortfolioSection'
 import { ContactSection } from '../sections/ContactSection'
 
 const MainContent: FC<PropsWithChildren> = ({ children }) => (
-    <main className="flex flex-col gap-24 pt-24">
+    <main className="flex flex-col gap-24">
         {children}
     </main>
 )
