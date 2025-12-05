@@ -37,7 +37,7 @@ const CustomCursor: FC = () => {
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement
             // Check if hovering over interactive elements
-            if (target.closest('a, button, [role="button"], input, select, textarea, .cursor-hover')) {
+            if (target.closest('a, button, [role="button"], input, select, textarea, label, .cursor-hover')) {
                 setIsHovering(true)
             } else {
                 setIsHovering(false)
@@ -66,7 +66,7 @@ const CustomCursor: FC = () => {
             {/* Global style to hide default cursor only on fine pointer devices */}
             <style>{`
                 @media (pointer: fine) {
-                    body, a, button, input, select, textarea {
+                    body, a, button, input, select, textarea, label {
                         cursor: none !important;
                     }
                 }

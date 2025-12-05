@@ -1,5 +1,14 @@
 import { useState, type FC } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ScheduleCallModal } from './ScheduleCallModal'
+
+export type NavItem = {
+    id: string
+    label: string
+    href?: string
+    onClick?: () => void
+    active?: boolean
+}
 
 const NAV_LINKS = [
     { label: 'SERVICES', href: '/servicios' },
@@ -9,7 +18,12 @@ const NAV_LINKS = [
     { label: 'ABOUT', href: '/about' },
 ]
 
-const Header: FC = () => {
+interface HeaderProps {
+    secondaryNavItems?: NavItem[]
+    secondaryNavClassName?: string
+}
+
+const Header: FC<HeaderProps> = ({ secondaryNavItems, secondaryNavClassName }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false)
 
@@ -32,12 +46,37 @@ const Header: FC = () => {
                                 <rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
                             </svg>
                         </button>
-                        <nav className="hidden flex-col items-start text-left text-xs font-bold tracking-[0.15em] uppercase leading-loose gap-1 md:flex mr-8">
+                        <nav className="relative hidden flex-col items-start text-left text-xs font-bold tracking-[0.15em] uppercase leading-loose gap-1 md:flex mr-8">
                             {NAV_LINKS.map((link) => (
                                 <a key={link.href} href={link.href} className="hover:text-blue-600 transition-colors">
                                     {link.label}
                                 </a>
                             ))}
+
+                            <AnimatePresence>
+                                {secondaryNavItems && secondaryNavItems.length > 0 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.3 }}
+                                        className={`absolute left-0 hidden lg:flex flex-col items-start gap-1 ${secondaryNavClassName || 'top-full mt-4'}`}
+                                    >
+                                        {secondaryNavItems.map((item) => (
+                                            <button
+                                                key={item.id}
+                                                type="button"
+                                                onClick={item.onClick}
+                                                className={`transition-colors hover:text-blue-600 ${
+                                                    item.active ? 'text-blue-600' : 'text-slate-900'
+                                                }`}
+                                            >
+                                                {item.label}
+                                            </button>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </nav>
                     </div>
 
