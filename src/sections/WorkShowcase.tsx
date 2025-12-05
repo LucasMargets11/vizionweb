@@ -1,58 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, type FC } from 'react'
-
-const WorkCard: FC = () => {
-    return (
-        <div className="group relative aspect-[1/1.35] w-full overflow-hidden rounded-[3rem] bg-[#CFA6FF]">
-            {/* Background Image with Zoom & Blur on Hover */}
-            <div className="absolute inset-0 h-full w-full transition-all duration-500 ease-out group-hover:scale-110 group-hover:blur-sm">
-                {/* Placeholder Image - Replace src with real project image */}
-                <img 
-                    src="/reelshowcase/vizion.png" 
-                    alt="Project Preview" 
-                    className="h-full w-full object-cover"
-                />
-            </div>
-
-            {/* Tags Container - Appears on Hover */}
-            <div className="absolute left-6 top-6 flex flex-wrap gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span className="rounded-lg bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-900 shadow-sm">
-                    Discovery & Strategy
-                </span>
-                <span className="rounded-lg bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-900 shadow-sm">
-                    Web Design
-                </span>
-                <span className="rounded-lg bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-900 shadow-sm">
-                    UI / UX
-                </span>
-            </div>
-
-            {/* View Project Button - Centered */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <div className="flex items-center gap-2 rounded-2xl bg-white px-6 py-4 shadow-xl">
-                    <span className="text-sm font-bold uppercase tracking-widest text-slate-900">
-                        View Project
-                    </span>
-                    <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="16" 
-                        height="16" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        className="text-slate-900"
-                    >
-                        <path d="M7 17L17 7" />
-                        <path d="M7 7h10v10" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-    )
-}
+import { WorkCard } from '../components/WorkCard'
+import { PROJECTS } from '../data/projects'
 
 export const WorkShowcase: FC = () => {
     const targetRef = useRef<HTMLDivElement>(null)
@@ -69,7 +18,7 @@ export const WorkShowcase: FC = () => {
     const x = useTransform(scrollYProgress, [0.15, 0.85], ["0%", "-900px"])
 
     return (
-        <section ref={targetRef} className="relative w-full bg-white">
+        <section id="portfolio" ref={targetRef} className="relative w-full bg-white">
             
             {/* MOBILE LAYOUT (Default vertical stack) */}
             <div className="block py-24 px-6 md:hidden">
@@ -77,8 +26,8 @@ export const WorkShowcase: FC = () => {
                     Nuestros Trabajos
                 </h2>
                 <div className="flex flex-col gap-8">
-                    {[1, 2, 3, 4].map((i) => (
-                        <WorkCard key={i} />
+                    {PROJECTS.map((project) => (
+                        <WorkCard key={project.id} {...project} />
                     ))}
                 </div>
             </div>
@@ -104,9 +53,9 @@ export const WorkShowcase: FC = () => {
                                 style={{ x }} 
                                 className="flex gap-12 pl-4"
                             >
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="w-[400px] shrink-0">
-                                        <WorkCard />
+                                {PROJECTS.map((project) => (
+                                    <div key={project.id} className="w-[400px] shrink-0">
+                                        <WorkCard {...project} />
                                     </div>
                                 ))}
                             </motion.div>
