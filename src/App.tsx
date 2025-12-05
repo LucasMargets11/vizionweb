@@ -7,6 +7,7 @@ import { ProjectsPage } from './pages/ProjectsPage'
 import { ContactPage } from './pages/ContactPage'
 import { AboutPage } from './pages/AboutPage'
 import { PricingPage } from './pages/PricingPage'
+import { ProjectDetailPage } from './pages/ProjectDetailPage'
 
 const App: FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/servicios" element={<ServicesPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:slug" element={<ProjectDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/pricing" element={<PricingPage />} />

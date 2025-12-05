@@ -1,16 +1,20 @@
 import type { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 interface WorkCardProps {
+    id?: string | number;
+    slug?: string;
     image?: string;
     tags?: string[];
 }
 
 export const WorkCard: FC<WorkCardProps> = ({ 
+    slug = '#',
     image = "/reelshowcase/vizion.png", 
     tags = ['Discovery & Strategy', 'Web Design', 'UI / UX'] 
 }) => {
     return (
-        <div className="group relative aspect-[1/1.35] w-full overflow-hidden rounded-[3rem] bg-[#CFA6FF]">
+        <Link to={`/projects/${slug}`} className="group relative block aspect-[1/1.35] w-full overflow-hidden rounded-[3rem] bg-[#CFA6FF]">
             {/* Background Image with Zoom & Blur on Hover */}
             <div className="absolute inset-0 h-full w-full transition-all duration-500 ease-out group-hover:scale-110 group-hover:blur-sm">
                 <img 
@@ -52,6 +56,6 @@ export const WorkCard: FC<WorkCardProps> = ({
                     </svg>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
