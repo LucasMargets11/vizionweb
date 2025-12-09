@@ -1,4 +1,6 @@
 import type { FC } from 'react'
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../components/common/Header'
 import { Footer } from '../components/common/Footer'
@@ -109,6 +111,20 @@ const SERVICES = [
 ]
 
 export const ServicesPage: FC = () => {
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '')
+      const element = document.getElementById(id)
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }, 100)
+      }
+    }
+  }, [hash])
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -146,6 +162,7 @@ export const ServicesPage: FC = () => {
         <div className="flex flex-col">
           {SERVICES.map((service, index) => (
             <motion.section 
+              id={service.id}
               key={service.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

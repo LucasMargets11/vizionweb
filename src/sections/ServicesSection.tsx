@@ -1,9 +1,11 @@
 import type { FC } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 const SERVICES = [
     {
         title: 'Producción audiovisual',
+        id: 'production',
         description: 'Reels, piezas comerciales y contenido documental pensados para verse increíble en pantalla.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,6 +17,7 @@ const SERVICES = [
     },
     {
         title: 'Desarrollo web & landings',
+        id: 'web-dev',
         description: 'Sitios rápidos y claros que conectan tu historia con resultados medibles.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,6 +30,7 @@ const SERVICES = [
     },
     {
         title: 'Sistemas & automatizaciones',
+        id: 'systems-automation',
         description: 'Integraciones, flujos y bots que ahorran tiempo y convierten mejor tus oportunidades.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,6 +42,7 @@ const SERVICES = [
     },
     {
         title: 'Estrategia & consultoría digital',
+        id: 'strategy-branding',
         description: 'Acompañamiento para alinear contenido, medios y datos con tus objetivos de negocio.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -95,12 +100,12 @@ export const ServicesSection: FC = () => {
                                         <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-500">
                                             {service.description}
                                         </p>
-                                        <a 
-                                            href="#" 
+                                        <Link 
+                                            to={`/servicios#${service.id}`}
                                             className="mt-4 inline-block w-fit text-sm font-bold uppercase tracking-wider text-slate-900 underline decoration-slate-300 decoration-2 underline-offset-4 transition-colors hover:text-blue-600 hover:decoration-blue-600"
                                         >
                                             Ver más
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             ))}

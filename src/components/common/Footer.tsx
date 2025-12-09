@@ -110,9 +110,21 @@ export const Footer: FC = () => {
               <div className="flex flex-col gap-4">
                 <h4 className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Social</h4>
                 <ul className="flex flex-col gap-2.5">
-                  {['Instagram', 'LinkedIn', 'Twitter', 'Behance'].map(item => (
-                    <li key={item}>
-                      <a href="#" className="text-sm text-slate-800 hover:text-cyan-500 transition-colors">{item}</a>
+                  {[
+                    { name: 'Instagram', href: 'https://www.instagram.com/estudio.vizion/' },
+                    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/lucas-margets-bb088b255' },
+                    { name: 'Twitter', href: '#' },
+                    { name: 'Behance', href: '#' }
+                  ].map(item => (
+                    <li key={item.name}>
+                      <a 
+                        href={item.href} 
+                        target={item.href.startsWith('http') ? '_blank' : undefined}
+                        rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="text-sm text-slate-800 hover:text-cyan-500 transition-colors"
+                      >
+                        {item.name}
+                      </a>
                     </li>
                   ))}
                 </ul>
