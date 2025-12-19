@@ -1,17 +1,29 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState, type FC } from 'react'
+import { useEffect, useMemo, useState, type FC } from 'react'
 
-const PROJECTS = Array.from({ length: 8 }, (_, i) => ({
-    id: i + 1,
-    src: '/reelshowcase/vizion.png',
-    alt: `Project ${i + 1}`
-}))
+const logos = [
+    { id: 1, src: '/workcards/logos CARDS vizion_Mesa de trabajo 1-01.png', alt: 'Project 1' },
+    { id: 2, src: '/workcards/logos CARDS vizion-02.png', alt: 'Project 2' },
+    { id: 3, src: '/workcards/logos CARDS vizion-03.png', alt: 'Project 3' },
+    { id: 4, src: '/workcards/logos CARDS vizion-04.png', alt: 'Project 4' },
+    { id: 5, src: '/workcards/logos CARDS vizion-05.png', alt: 'Project 5' },
+    { id: 6, src: '/workcards/logos CARDS vizion-06.png', alt: 'Project 6' },
+    { id: 7, src: '/workcards/logos CARDS vizion-07.png', alt: 'Project 7' },
+    { id: 8, src: '/workcards/logos CARDS vizion-08.png', alt: 'Project 8' },
+]
 
 const ReelShowcase: FC = () => {
     const [isReelOpen, setIsReelOpen] = useState(false)
 
-    // Duplicamos los items para asegurar un loop fluido
-    const items = [...PROJECTS, ...PROJECTS, ...PROJECTS]
+    const { topItems, bottomItems } = useMemo(() => {
+        const shuffled1 = [...logos].sort(() => Math.random() - 0.5)
+        const shuffled2 = [...logos].sort(() => Math.random() - 0.5)
+
+        return {
+            topItems: [...shuffled1, ...shuffled1, ...shuffled1],
+            bottomItems: [...shuffled2, ...shuffled2, ...shuffled2]
+        }
+    }, [])
 
     // Manejo de tecla ESC para cerrar el modal y bloqueo de scroll
     useEffect(() => {
@@ -58,7 +70,7 @@ const ReelShowcase: FC = () => {
                             animationPlayState: isReelOpen ? 'paused' : 'running'
                         }}
                     >
-                        {items.map((project, idx) => (
+                        {topItems.map((project, idx) => (
                             <div
                                 key={`top-${idx}`}
                                 className="aspect-[4/3] h-full w-auto shrink-0 overflow-hidden rounded-[30px]"
@@ -82,7 +94,7 @@ const ReelShowcase: FC = () => {
                             animationPlayState: isReelOpen ? 'paused' : 'running'
                         }}
                     >
-                        {items.map((project, idx) => (
+                        {bottomItems.map((project, idx) => (
                             <div
                                 key={`bottom-${idx}`}
                                 className="aspect-[4/3] h-full w-auto shrink-0 overflow-hidden rounded-[30px]"
