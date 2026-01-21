@@ -1,6 +1,21 @@
 import { useState, type FC } from 'react';
 import { motion } from 'framer-motion';
 import { ScheduleCallModal } from './ScheduleCallModal';
+import { t } from '../../i18n';
+
+const SERVICE_ITEMS = [
+  'footer.columns.services.items.production',
+  'footer.columns.services.items.web',
+  'footer.columns.services.items.systems',
+  'footer.columns.services.items.consulting',
+] as const;
+
+const STUDIO_ITEMS = [
+  'footer.columns.studio.items.work',
+  'footer.columns.studio.items.about',
+  'footer.columns.studio.items.process',
+  'footer.columns.studio.items.careers',
+] as const;
 
 // Icons
 const PhoneIcon = () => (
@@ -17,9 +32,9 @@ export const Footer: FC = () => {
   return (
     <footer className="w-full bg-white py-12 md:py-16 lg:py-20 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-10">
-        
+
         {/* 1) Banda superior CTA */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -28,7 +43,7 @@ export const Footer: FC = () => {
         >
           <div className="flex-1">
             <h3 className="text-slate-900 text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-tight md:whitespace-nowrap">
-              ¿Listos para potenciar su marca? Nosotros también.
+              {t('footer.ctaTitle')}
             </h3>
           </div>
 
@@ -39,30 +54,30 @@ export const Footer: FC = () => {
             className="w-full md:w-auto min-w-[260px] inline-flex items-center justify-center gap-3 rounded-2xl px-10 md:px-14 py-5 md:py-6 text-base md:text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-teal-400 shadow-lg shadow-cyan-400/30 transition-all cursor-pointer"
           >
             <PhoneIcon />
-            <span>Agendar una llamada</span>
+            <span>{t('footer.ctaButton')}</span>
           </motion.button>
         </motion.div>
 
         {/* 2) Bloque principal (Grid) */}
         <div className="mt-6 md:mt-8 grid gap-6 md:gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          
+
           {/* 2.1 Tarjeta Izquierda - Marca */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="rounded-3xl bg-white border border-slate-200 p-8 md:p-10 flex items-center justify-center min-h-[300px] md:min-h-[400px]"
           >
-            <img 
-              src="/icon/logovizion.svg" 
-              alt="Vizion Logo" 
+            <img
+              src="/icon/logovizion.svg"
+              alt="Vizion Logo"
               className="w-full max-w-[420px] md:max-w-[620px] h-auto object-contain"
             />
           </motion.div>
 
           {/* 2.2 Tarjeta Derecha - Navegación */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -76,7 +91,7 @@ export const Footer: FC = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
-                Disponible para nuevos proyectos
+                {t('footer.availabilityBadge')}
               </div>
             </div>
 
@@ -84,11 +99,11 @@ export const Footer: FC = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-4">
               {/* Col 1 */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Servicios</h4>
+                <h4 className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{t('footer.columns.services.title')}</h4>
                 <ul className="flex flex-col gap-2.5">
-                  {['Producción', 'Desarrollo Web', 'Sistemas', 'Consultoría'].map(item => (
-                    <li key={item}>
-                      <a href="#" className="text-sm text-slate-800 hover:text-cyan-500 transition-colors">{item}</a>
+                  {SERVICE_ITEMS.map((key) => (
+                    <li key={key}>
+                      <a href="#" className="text-sm text-slate-800 hover:text-cyan-500 transition-colors">{t(key)}</a>
                     </li>
                   ))}
                 </ul>
@@ -96,11 +111,11 @@ export const Footer: FC = () => {
 
               {/* Col 2 */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Estudio</h4>
+                <h4 className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{t('footer.columns.studio.title')}</h4>
                 <ul className="flex flex-col gap-2.5">
-                  {['Work', 'Nosotros', 'Proceso', 'Carreras'].map(item => (
-                    <li key={item}>
-                      <a href="#" className="text-sm text-slate-800 hover:text-cyan-500 transition-colors">{item}</a>
+                  {STUDIO_ITEMS.map((key) => (
+                    <li key={key}>
+                      <a href="#" className="text-sm text-slate-800 hover:text-cyan-500 transition-colors">{t(key)}</a>
                     </li>
                   ))}
                 </ul>
@@ -108,7 +123,7 @@ export const Footer: FC = () => {
 
               {/* Col 3 */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Social</h4>
+                <h4 className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{t('footer.columns.social.title')}</h4>
                 <ul className="flex flex-col gap-2.5">
                   {[
                     { name: 'Instagram', href: 'https://www.instagram.com/estudio.vizion/' },
@@ -117,8 +132,8 @@ export const Footer: FC = () => {
                     { name: 'Behance', href: '#' }
                   ].map(item => (
                     <li key={item.name}>
-                      <a 
-                        href={item.href} 
+                      <a
+                        href={item.href}
                         target={item.href.startsWith('http') ? '_blank' : undefined}
                         rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                         className="text-sm text-slate-800 hover:text-cyan-500 transition-colors"
@@ -133,10 +148,10 @@ export const Footer: FC = () => {
 
             {/* Bottom Strip */}
             <div className="pt-6 border-t border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-slate-400">
-              <span>© 2025 Vizion Studio. All rights reserved.</span>
+              <span>{t('footer.legalTemplate', { year: new Date().getFullYear().toString() })}</span>
               <div className="flex gap-6">
-                <a href="#" className="hover:text-slate-900 transition-colors">Privacidad</a>
-                <a href="#" className="hover:text-slate-900 transition-colors">Términos</a>
+                <a href="#" className="hover:text-slate-900 transition-colors">{t('footer.links.privacy')}</a>
+                <a href="#" className="hover:text-slate-900 transition-colors">{t('footer.links.terms')}</a>
               </div>
             </div>
 
@@ -144,10 +159,10 @@ export const Footer: FC = () => {
         </div>
 
       </div>
-      
-      <ScheduleCallModal 
-        isOpen={isScheduleModalOpen} 
-        onClose={() => setIsScheduleModalOpen(false)} 
+
+      <ScheduleCallModal
+        isOpen={isScheduleModalOpen}
+        onClose={() => setIsScheduleModalOpen(false)}
       />
     </footer>
   );

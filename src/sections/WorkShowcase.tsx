@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, type FC } from 'react'
 import { WorkCard } from '../components/WorkCard'
 import { PROJECTS } from '../data/projects'
+import { t } from '../i18n'
 
 export const WorkShowcase: FC = () => {
     const targetRef = useRef<HTMLDivElement>(null)
@@ -17,13 +18,15 @@ export const WorkShowcase: FC = () => {
     // Agregamos "zonas muertas" al inicio y final (0-15% y 85-100%) para pausar la animación
     const x = useTransform(scrollYProgress, [0.15, 0.85], ["0%", "-900px"])
 
+    const desktopTitleLines = t('sections.workShowcase.title').split('\n')
+
     return (
         <section id="portfolio" ref={targetRef} className="relative w-full bg-white">
-            
+
             {/* MOBILE LAYOUT (Default vertical stack) */}
             <div className="block py-24 px-6 md:hidden">
                 <h2 className="mb-12 text-left text-4xl font-extrabold uppercase tracking-tight text-slate-900">
-                    Nuestros Trabajos
+                    {t('sections.workShowcase.mobileTitle')}
                 </h2>
                 <div className="flex flex-col gap-8">
                     {PROJECTS.map((project) => (
@@ -36,21 +39,26 @@ export const WorkShowcase: FC = () => {
             <div className="hidden h-[450vh] md:block">
                 <div className="sticky top-0 flex h-screen items-center overflow-hidden px-6">
                     <div className="mx-auto flex w-full max-w-[90rem] items-center gap-20">
-                        
+
                         {/* Title Section */}
                         <div className="w-1/3 shrink-0 pl-8">
                             <h2 className="text-left text-5xl font-extrabold uppercase tracking-tight text-slate-900 lg:text-6xl">
-                                Nuestros<br />Trabajos
+                                {desktopTitleLines.map((line, index) => (
+                                    <span key={`${line}-${index}`}>
+                                        {line}
+                                        {index < desktopTitleLines.length - 1 && <br />}
+                                    </span>
+                                ))}
                             </h2>
                             <p className="mt-6 max-w-xs text-lg text-slate-500">
-                                Una selección de proyectos donde la creatividad se encuentra con la tecnología.
+                                {t('sections.workShowcase.description')}
                             </p>
                         </div>
 
                         {/* Horizontal Cards Track */}
                         <div className="w-2/3 overflow-hidden">
-                            <motion.div 
-                                style={{ x }} 
+                            <motion.div
+                                style={{ x }}
                                 className="flex gap-12 pl-4"
                             >
                                 {PROJECTS.map((project) => (

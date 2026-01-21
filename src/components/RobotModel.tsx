@@ -2,6 +2,7 @@ import React, { Suspense, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF, Html } from '@react-three/drei';
 import * as THREE from 'three';
+import { t } from '../i18n';
 
 interface RobotModelProps {
   isHovering: boolean;
@@ -52,7 +53,7 @@ export const RobotModel = ({ isHovering }: RobotModelProps) => {
 export const Loader = () => (
   <Html center>
     <div className="text-cyan-400 font-mono text-sm animate-pulse whitespace-nowrap">
-      LOADING SYSTEM...
+      {t('common.loading.system')}
     </div>
   </Html>
 );

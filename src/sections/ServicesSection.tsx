@@ -1,12 +1,13 @@
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { t } from '../i18n'
 
 const SERVICES = [
     {
-        title: 'Producción audiovisual',
+        titleKey: 'sections.services.cards.production.title',
+        descriptionKey: 'sections.services.cards.production.description',
         id: 'production',
-        description: 'Reels, piezas comerciales y contenido documental pensados para verse increíble en pantalla.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100" height="100" className="fill-blue-50" />
@@ -16,9 +17,9 @@ const SERVICES = [
         )
     },
     {
-        title: 'Desarrollo web & landings',
+        titleKey: 'sections.services.cards.webDev.title',
+        descriptionKey: 'sections.services.cards.webDev.description',
         id: 'web-dev',
-        description: 'Sitios rápidos y claros que conectan tu historia con resultados medibles.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100" height="100" className="fill-cyan-50" />
@@ -29,9 +30,9 @@ const SERVICES = [
         )
     },
     {
-        title: 'Sistemas & automatizaciones',
+        titleKey: 'sections.services.cards.systemsAutomation.title',
+        descriptionKey: 'sections.services.cards.systemsAutomation.description',
         id: 'systems-automation',
-        description: 'Integraciones, flujos y bots que ahorran tiempo y convierten mejor tus oportunidades.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100" height="100" className="fill-indigo-50" />
@@ -41,9 +42,9 @@ const SERVICES = [
         )
     },
     {
-        title: 'Estrategia & consultoría digital',
+        titleKey: 'sections.services.cards.strategyBranding.title',
+        descriptionKey: 'sections.services.cards.strategyBranding.description',
         id: 'strategy-branding',
-        description: 'Acompañamiento para alinear contenido, medios y datos con tus objetivos de negocio.',
         icon: (
             <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100" height="100" className="fill-slate-50" />
@@ -64,11 +65,10 @@ export const ServicesSection: FC = () => {
                     <div className="lg:col-span-6 lg:pr-12">
                         <div className="sticky top-24">
                             <h2 className="text-4xl font-extrabold uppercase tracking-tight text-slate-900 sm:text-5xl">
-                                Servicios
+                                {t('sections.services.title')}
                             </h2>
                             <p className="mt-8 max-w-sm text-lg leading-relaxed text-slate-600">
-                                Combinamos historias en pantalla con sistemas que las potencian. 
-                                Creamos soluciones integrales donde el diseño y la tecnología trabajan juntos.
+                                {t('sections.services.description')}
                             </p>
                         </div>
                     </div>
@@ -76,13 +76,13 @@ export const ServicesSection: FC = () => {
                     {/* Right Column */}
                     <div className="lg:col-span-6">
                         <div className="flex flex-col">
-                            {SERVICES.map((service, index) => (
-                                <div 
-                                    key={index} 
+                            {SERVICES.map((service) => (
+                                <div
+                                    key={service.id}
                                     className="group flex flex-col gap-10 border-b border-slate-200 py-16 first:pt-0 last:border-0 sm:flex-row sm:items-start"
                                 >
                                     {/* Icon */}
-                                    <motion.div 
+                                    <motion.div
                                         className="h-40 w-40 flex-shrink-0 overflow-hidden rounded-sm"
                                         initial={{ scale: 1 }}
                                         whileInView={{ scale: 1.1 }}
@@ -95,16 +95,16 @@ export const ServicesSection: FC = () => {
                                     {/* Content */}
                                     <div className="flex flex-1 flex-col pt-2">
                                         <h3 className="text-xl font-bold uppercase tracking-wide text-slate-900">
-                                            {service.title}
+                                            {t(service.titleKey)}
                                         </h3>
                                         <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-500">
-                                            {service.description}
+                                            {t(service.descriptionKey)}
                                         </p>
-                                        <Link 
+                                        <Link
                                             to={`/servicios#${service.id}`}
                                             className="mt-4 inline-block w-fit text-sm font-bold uppercase tracking-wider text-slate-900 underline decoration-slate-300 decoration-2 underline-offset-4 transition-colors hover:text-blue-600 hover:decoration-blue-600"
                                         >
-                                            Ver más
+                                            {t('sections.services.linkLabel')}
                                         </Link>
                                     </div>
                                 </div>

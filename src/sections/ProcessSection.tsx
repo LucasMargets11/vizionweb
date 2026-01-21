@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 
 const PROCESS_STEPS = [
-    { title: 'Discovery', detail: 'Workshops para entender negocio y audiencia.' },
-    { title: 'Concepto', detail: 'Definición del mood visual y narrativa.' },
-    { title: 'Diseño', detail: 'Exploraciones UI/UX con prototipos navegables.' },
+    { title: 'Descubrimiento', detail: 'Sesiones de trabajo para entender el negocio y la audiencia.' },
+    { title: 'Concepto', detail: 'Definición del universo visual y de la narrativa.' },
+    { title: 'Diseño', detail: 'Exploraciones UX/UI con prototipos navegables.' },
     { title: 'Desarrollo', detail: 'Implementación en React + Tailwind + Motion.' },
-    { title: 'Lanzamiento', detail: 'QA, performance y handover documentado.' },
+    { title: 'Lanzamiento', detail: 'Calidad (QA), rendimiento y traspaso documentado.' },
 ]
 
 export const ProcessSection: FC = () => {

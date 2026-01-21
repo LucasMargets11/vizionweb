@@ -4,11 +4,12 @@ import { motion } from 'framer-motion'
 import Header from '../components/common/Header'
 import { Footer } from '../components/common/Footer'
 import { PROJECTS } from '../data/projects'
+import { t } from '../i18n'
 
 export const ProjectDetailPage: FC = () => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  
+
   console.log('ProjectDetailPage slug:', slug)
   const project = PROJECTS.find((p) => p.slug === slug)
   console.log('Project found:', project)
@@ -22,8 +23,8 @@ export const ProjectDetailPage: FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-white">
         <Header />
         <div className="pt-32 text-center">
-            <p className="text-slate-500 text-xl">Proyecto "{slug}" no encontrado.</p>
-            <button onClick={() => navigate('/projects')} className="mt-4 text-blue-600 underline">Volver a proyectos</button>
+          <p className="text-slate-500 text-xl">{t('pages.projectDetail.notFound', { slug: slug ?? '' })}</p>
+          <button onClick={() => navigate('/projects')} className="mt-4 text-blue-600 underline">{t('pages.projectDetail.backToProjects')}</button>
         </div>
       </div>
     )
@@ -32,13 +33,13 @@ export const ProjectDetailPage: FC = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      
+
       <main className="min-h-screen bg-white">
         <div className="mx-auto max-w-6xl px-6 md:px-10 pt-20 md:pt-28 pb-20">
-          
+
           {/* Main Grid */}
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-            
+
             {/* Left Column: Images (Scrollable) */}
             <div className="space-y-6">
               {project.images.map((src, index) => (
@@ -52,7 +53,7 @@ export const ProjectDetailPage: FC = () => {
                 >
                   <img
                     src={src}
-                    alt={`${project.name} - view ${index + 1}`}
+                    alt={t('pages.projectDetail.imageAlt', { name: project.name, index: (index + 1).toString() })}
                     className="w-full h-auto object-cover"
                   />
                 </motion.div>
@@ -93,7 +94,7 @@ export const ProjectDetailPage: FC = () => {
                       <p>{project.role}</p>
                     </div>
                   )}
-                  
+
                   {project.services && project.services.length > 0 && (
                     <div>
                       <p className="font-bold text-slate-900 mb-1">Servicios</p>
@@ -104,7 +105,7 @@ export const ProjectDetailPage: FC = () => {
                       </ul>
                     </div>
                   )}
-                  
+
                   {project.year && (
                     <div>
                       <p className="font-bold text-slate-900 mb-1">Año</p>
@@ -144,8 +145,8 @@ export const ProjectDetailPage: FC = () => {
               >
                 Navegar al sitio
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2">
-                  <path d="M7 17L17 7"/>
-                  <path d="M7 7h10v10"/>
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
                 </svg>
               </a>
             )}

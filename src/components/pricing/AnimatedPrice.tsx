@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
+const numberFormatter = new Intl.NumberFormat('es-AR');
+
 type AnimatedPriceProps = {
   value: number;
   prefix?: string;
@@ -13,8 +15,8 @@ type AnimatedPriceProps = {
 
 export const AnimatedPrice = ({
   value,
-  prefix = '$',
-  suffix = '/mo',
+  prefix = 'US$',
+  suffix = '/mes',
   className = '',
   textClassName = '',
   prefixClassName = '',
@@ -22,7 +24,7 @@ export const AnimatedPrice = ({
 }: AnimatedPriceProps) => {
   const motionValue = useMotionValue(value);
   const rounded = useTransform(motionValue, (latest) => Math.round(latest));
-  const display = useTransform(rounded, (latest) => latest.toLocaleString('en-US'));
+  const display = useTransform(rounded, (latest) => numberFormatter.format(latest));
 
   useEffect(() => {
     const controls = animate(motionValue, value, {

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
+import { t } from '../i18n';
 
 // --- Content Configuration ---
 const CONTENT = {
@@ -16,6 +17,9 @@ const CONTENT = {
   ],
   cta: "Conocer más sobre Vizion"
 };
+
+// Switch to true when the 3D robot should return to the About Us section
+const SHOW_ABOUT_US_ROBOT = false;
 
 // --- Robot Model Component ---
 interface RobotModelProps {
@@ -68,7 +72,7 @@ const RobotModel = ({ isHovering }: RobotModelProps) => {
 const Loader = () => (
   <Html center>
     <div className="text-cyan-400 font-mono text-sm animate-pulse whitespace-nowrap">
-      LOADING SYSTEM...
+      {t('common.loading.system')}
     </div>
   </Html>
 );
@@ -79,12 +83,12 @@ const AboutUsSection: React.FC = () => {
 
   return (
     <section id="about" className="relative w-full min-h-screen flex items-center bg-[#02060A] overflow-hidden py-20">
-      
+
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Grid Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
-        
+
         {/* Radial Gradient behind robot (positioned right) */}
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[120px] opacity-50" />
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[100px] opacity-40" />
@@ -92,7 +96,7 @@ const AboutUsSection: React.FC = () => {
 
       <div className="max-w-6xl mx-auto px-6 md:px-10 relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          
+
           {/* Left Column: Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -147,48 +151,50 @@ const AboutUsSection: React.FC = () => {
           </motion.div>
 
           {/* Right Column: 3D Robot Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-            viewport={{ once: true }}
-            className="w-full max-w-md mx-auto lg:max-w-none order-2"
-          >
-            <motion.div 
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-              className="relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] w-full rounded-3xl overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md shadow-2xl group"
+          {SHOW_ABOUT_US_ROBOT && (
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+              viewport={{ once: true }}
+              className="w-full max-w-md mx-auto lg:max-w-none order-2"
             >
-              {/* Card Border Gradient on Hover */}
-              <div className="absolute inset-0 rounded-3xl border border-transparent group-hover:border-cyan-500/30 transition-colors duration-500 pointer-events-none z-20" />
-              
-              {/* Inner Glow */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-cyan-900/20 opacity-50 z-10 pointer-events-none" />
-
-              <Canvas
-                camera={{ position: [0, 0, 6], fov: 45 }}
-                className="w-full h-full z-10"
+              <motion.div
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                className="relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] w-full rounded-3xl overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md shadow-2xl group"
               >
-                <ambientLight intensity={0.6} />
-                <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
-                <directionalLight position={[-5, 0, -5]} intensity={0.8} color="#00ffff" />
-                <spotLight position={[0, 5, 0]} intensity={0.5} angle={0.5} penumbra={1} color="#22d3ee" />
-                
-                <Suspense fallback={<Loader />}>
-                  <RobotModel isHovering={isHovering} />
-                </Suspense>
-                
-                <OrbitControls 
-                  enableZoom={false} 
-                  enablePan={false}
-                  minPolarAngle={Math.PI / 2 - 0.2}
-                  maxPolarAngle={Math.PI / 2 + 0.2}
-                  minAzimuthAngle={-0.5}
-                  maxAzimuthAngle={0.5}
-                />
-              </Canvas>
+                {/* Card Border Gradient on Hover */}
+                <div className="absolute inset-0 rounded-3xl border border-transparent group-hover:border-cyan-500/30 transition-colors duration-500 pointer-events-none z-20" />
+
+                {/* Inner Glow */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-cyan-900/20 opacity-50 z-10 pointer-events-none" />
+
+                <Canvas
+                  camera={{ position: [0, 0, 6], fov: 45 }}
+                  className="w-full h-full z-10"
+                >
+                  <ambientLight intensity={0.6} />
+                  <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
+                  <directionalLight position={[-5, 0, -5]} intensity={0.8} color="#00ffff" />
+                  <spotLight position={[0, 5, 0]} intensity={0.5} angle={0.5} penumbra={1} color="#22d3ee" />
+
+                  <Suspense fallback={<Loader />}>
+                    <RobotModel isHovering={isHovering} />
+                  </Suspense>
+
+                  <OrbitControls
+                    enableZoom={false}
+                    enablePan={false}
+                    minPolarAngle={Math.PI / 2 - 0.2}
+                    maxPolarAngle={Math.PI / 2 + 0.2}
+                    minAzimuthAngle={-0.5}
+                    maxAzimuthAngle={0.5}
+                  />
+                </Canvas>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          )}
 
         </div>
       </div>

@@ -1,15 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useMemo, useState, type FC } from 'react'
+import { t } from '../i18n'
 
 const logos = [
-    { id: 1, src: '/workcards/logos CARDS vizion_Mesa de trabajo 1-01.png', alt: 'Project 1' },
-    { id: 2, src: '/workcards/logos CARDS vizion-02.png', alt: 'Project 2' },
-    { id: 3, src: '/workcards/logos CARDS vizion-03.png', alt: 'Project 3' },
-    { id: 4, src: '/workcards/logos CARDS vizion-04.png', alt: 'Project 4' },
-    { id: 5, src: '/workcards/logos CARDS vizion-05.png', alt: 'Project 5' },
-    { id: 6, src: '/workcards/logos CARDS vizion-06.png', alt: 'Project 6' },
-    { id: 7, src: '/workcards/logos CARDS vizion-07.png', alt: 'Project 7' },
-    { id: 8, src: '/workcards/logos CARDS vizion-08.png', alt: 'Project 8' },
+    { id: 1, src: '/workcards/logos CARDS vizion_Mesa de trabajo 1-01.png' },
+    { id: 2, src: '/workcards/logos CARDS vizion-02.png' },
+    { id: 3, src: '/workcards/logos CARDS vizion-03.png' },
+    { id: 4, src: '/workcards/logos CARDS vizion-04.png' },
+    { id: 5, src: '/workcards/logos CARDS vizion-05.png' },
+    { id: 6, src: '/workcards/logos CARDS vizion-06.png' },
+    { id: 7, src: '/workcards/logos CARDS vizion-07.png' },
+    { id: 8, src: '/workcards/logos CARDS vizion-08.png' },
 ]
 
 const ReelShowcase: FC = () => {
@@ -77,7 +78,7 @@ const ReelShowcase: FC = () => {
                             >
                                 <img
                                     src={project.src}
-                                    alt={project.alt}
+                                    alt={t('common.projectLogoAlt', { index: project.id.toString() })}
                                     className="h-full w-full object-cover opacity-90 transition-opacity hover:opacity-100"
                                 />
                             </div>
@@ -101,7 +102,7 @@ const ReelShowcase: FC = () => {
                             >
                                 <img
                                     src={project.src}
-                                    alt={project.alt}
+                                    alt={t('common.projectLogoAlt', { index: project.id.toString() })}
                                     className="h-full w-full object-cover opacity-90 transition-opacity hover:opacity-100"
                                 />
                             </div>
@@ -116,7 +117,7 @@ const ReelShowcase: FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.97 }}
                 >
-                    PLAY VIDEO
+                    {t('reel.button')}
                 </motion.button>
             </div>
 
@@ -144,10 +145,10 @@ const ReelShowcase: FC = () => {
                             <div className="relative flex items-center justify-between px-6 py-4">
                                 <div className="flex flex-col md:flex-row md:items-center md:gap-4">
                                     <span className="text-sm font-bold tracking-[0.3em] text-slate-900">
-                                        VIZION REEL
+                                        {t('reel.title')}
                                     </span>
                                     <span className="hidden text-xs font-medium tracking-widest text-slate-500 md:block">
-                                        MOTION · WEB · BRANDING
+                                        {t('reel.subtitle')}
                                     </span>
                                 </div>
 
@@ -155,7 +156,7 @@ const ReelShowcase: FC = () => {
                                     {/* Data Cluster */}
                                     <div className="hidden items-center gap-4 text-[10px] font-mono text-slate-500 md:flex">
                                         <div className="flex flex-col items-end">
-                                            <span className="text-slate-900 font-bold">DUR</span>
+                                            <span className="text-slate-900 font-bold">{t('reel.durationLabel')}</span>
                                             <span>01:24</span>
                                         </div>
                                         <div className="h-6 w-px bg-slate-200" />
@@ -192,7 +193,7 @@ const ReelShowcase: FC = () => {
                                     <div className="flex flex-col items-center gap-4">
                                         <div className="h-16 w-16 animate-pulse rounded-full border-2 border-slate-300 bg-slate-200" />
                                         <span className="font-mono text-xs tracking-[0.2em] text-slate-400">
-                                            LOADING VIDEO...
+                                            {t('reel.placeholder')}
                                         </span>
                                     </div>
                                 </div>
