@@ -1,124 +1,127 @@
-import { t } from '../i18n'
-
-const translateList = (keys: string[]) => keys.map((key) => t(key))
-
-export interface Project {
-  id: string;
-  slug: string;
-  name: string;
-  shortDescription: string;
-  longDescription: string;
-  role?: string;
-  services?: string[];
-  year?: string;
-  websiteUrl?: string;
-  images: string[];
-  tags?: string[];
-  image?: string;
+export type ProjectMedia = {
+  src: string
+  type: 'image' | 'video'
+  alt: string
 }
 
-export const PROJECTS: Project[] = [
-  {
-    id: '1',
-    slug: 'vizion-platform',
-    name: 'Vizion Platform',
-    shortDescription: 'Una plataforma integral para la gestión de activos digitales y branding corporativo.',
-    longDescription: 'Vizion Platform nació de la necesidad de centralizar la gestión de marca en un entorno digital caótico. Trabajamos estrechamente con el cliente para desarrollar una solución que no solo almacena activos, sino que también gestiona flujos de trabajo de aprobación y distribución.\n\nEl resultado es un sistema robusto, escalable y seguro que ha reducido los tiempos de entrega del equipo de marketing en un 40%. La interfaz, diseñada con un enfoque centrado en el contenido, permite a los usuarios encontrar lo que necesitan en segundos gracias a un sistema de etiquetado inteligente y búsqueda semántica.',
-    role: t('data.projects.roles.vizionPlatform'),
-    services: translateList([
-      'data.projects.services.discoveryStrategy',
-      'data.projects.services.webDesign',
-      'data.projects.services.ux',
-      'data.projects.services.development',
-    ]),
-    year: '2024',
-    websiteUrl: 'https://vizion.agency',
-    images: [
-      '/reelshowcase/vizion.png',
-      '/reelshowcase/vizion.png',
-      '/reelshowcase/vizion.png'
-    ],
-    tags: translateList([
-      'data.projects.services.discoveryStrategy',
-      'data.projects.services.webDesign',
-      'data.projects.services.ux',
-    ]),
-    image: '/reelshowcase/vizion.png'
-  },
-  {
-    id: '2',
-    slug: 'neon-branding',
-    name: 'Neon Branding',
-    shortDescription: 'Identidad visual dinámica para una marca de ropa urbana con presencia global.',
-    longDescription: 'Neon buscaba romper con los códigos tradicionales del estilo urbano. Nuestra propuesta se basó en el concepto de "fluidez digital", creando una identidad que muta y se adapta según el canal y la audiencia.\n\nDesarrollamos un sistema gráfico modular, animaciones para redes sociales y una guía de estilo completa que permite a la marca mantener su coherencia visual mientras explora nuevos territorios estéticos.',
-    role: t('data.projects.roles.neonBranding'),
-    services: translateList([
-      'data.projects.services.brandIdentity',
-      'data.projects.services.motionGraphics',
-      'data.projects.services.socialMedia',
-    ]),
-    year: '2023',
-    websiteUrl: 'https://example.com',
-    images: [
-      '/reelshowcase/vizion.png',
-      '/reelshowcase/vizion.png'
-    ],
-    tags: translateList([
-      'data.projects.services.brandIdentity',
-      'data.projects.services.motionGraphics',
-      'data.projects.services.socialMedia',
-    ]),
-    image: '/reelshowcase/vizion.png'
-  },
-  {
-    id: '3',
-    slug: 'eco-market',
-    name: 'Eco Market',
-    shortDescription: 'E-commerce de productos sustentables con una experiencia de compra fluida.',
-    longDescription: 'El desafío principal de Eco Market era transmitir la calidez y la ética de sus productos a través de una pantalla. Diseñamos una experiencia de usuario centrada en la transparencia y la trazabilidad.\n\nImplementamos una arquitectura tecnológica moderna (Next.js + Shopify) que garantiza tiempos de carga ultrarrápidos y una gestión de inventario en tiempo real, resultando en un aumento del 25% en la tasa de conversión durante el primer trimestre.',
-    role: t('data.projects.roles.ecoMarket'),
-    services: translateList([
-      'data.projects.services.ecommerce',
-      'data.projects.services.development',
-      'data.projects.services.seo',
-    ]),
-    year: '2023',
-    websiteUrl: 'https://example.com',
-    images: [
-      '/reelshowcase/vizion.png',
-      '/reelshowcase/vizion.png',
-      '/reelshowcase/vizion.png'
-    ],
-    tags: translateList([
-      'data.projects.services.ecommerce',
-      'data.projects.services.development',
-      'data.projects.services.seo',
-    ]),
-    image: '/reelshowcase/vizion.png'
-  },
-  {
-    id: '4',
-    slug: 'fintech-app',
-    name: 'Fintech App',
-    shortDescription: 'Prototipado y diseño de interfaz para la nueva generación de banca móvil.',
-    longDescription: 'Rediseñamos la experiencia de banca móvil para centrarla en el usuario joven. Simplificamos flujos complejos como transferencias internacionales e inversiones, haciéndolos accesibles y seguros.\n\nRealizamos múltiples rondas de pruebas con usuarios para validar cada decisión de diseño, logrando una interfaz limpia, intuitiva y altamente funcional que ha recibido excelentes críticas en las tiendas de aplicaciones.',
-    role: t('data.projects.roles.fintechApp'),
-    services: translateList([
-      'data.projects.services.appDesign',
-      'data.projects.services.prototyping',
-      'data.projects.services.userTesting',
-    ]),
-    year: '2024',
-    websiteUrl: 'https://example.com',
-    images: [
-      '/reelshowcase/vizion.png',
-      '/reelshowcase/vizion.png'
-    ],
-    tags: translateList([
-      'data.projects.services.appDesign',
-      'data.projects.services.prototyping',
-      'data.projects.services.userTesting',
-    ]),
-    image: '/reelshowcase/vizion.png'
+export type Project = {
+  slug: string
+  title: string
+  description: string
+  cover: string
+  media: ProjectMedia[]
+}
+
+type ProjectSpec = {
+  slug: string
+  title: string
+  description: string
+  assets: string[]
+}
+
+const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.arw']
+const VIDEO_EXTENSIONS = ['.mp4', '.mov', '.webm', '.m4v']
+
+const buildPath = (filename: string) => `/projects/${encodeURIComponent(filename)}`
+
+const buildMedia = (filename: string, title: string): ProjectMedia => {
+  const lower = filename.toLowerCase()
+  const isVideo = VIDEO_EXTENSIONS.some((ext) => lower.endsWith(ext))
+  const isImage = IMAGE_EXTENSIONS.some((ext) => lower.endsWith(ext))
+  const type: ProjectMedia['type'] = isVideo ? 'video' : 'image'
+  const cleanedName = filename.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').trim()
+
+  return {
+    src: buildPath(filename),
+    type,
+    alt: `${title} - ${isImage ? 'fotografía' : 'clip'} ${cleanedName}`.trim(),
   }
+}
+
+const createProject = ({ slug, title, description, assets }: ProjectSpec): Project => {
+  if (!assets.length) {
+    throw new Error(`El proyecto "${title}" necesita al menos un asset`)
+  }
+
+  const normalizedAssets = assets.map((filename) => ({ filename, media: buildMedia(filename, title) }))
+  const coverEntry =
+    normalizedAssets.find(({ filename }) => filename.toLowerCase().includes('portada')) ?? normalizedAssets[0]
+
+  const orderedMedia = [
+    coverEntry.media,
+    ...normalizedAssets.filter((asset) => asset !== coverEntry).map((asset) => asset.media),
+  ]
+
+  return {
+    slug,
+    title,
+    description,
+    cover: coverEntry.media.src,
+    media: orderedMedia,
+  }
+}
+
+const PROJECT_SPECS: ProjectSpec[] = [
+  {
+    slug: 'freixenet',
+    title: 'Freixenet',
+    description: 'Contenido y cobertura visual para campaña/evento. Piezas para redes y material de apoyo.',
+    assets: ['freixenet portada.jpg'],
+  },
+  {
+    slug: 'importados',
+    title: 'Importados',
+    description: 'Fotografía y piezas para catálogo y redes de productos importados.',
+    assets: ['improtados portada.ARW', 'importados.mp4'],
+  },
+  {
+    slug: 'karuma',
+    title: 'Karuma',
+    description: 'Contenido audiovisual para marca: portada, material de video y piezas sociales.',
+    assets: ['karuma portada.jpg', 'karuma video.MP4'],
+  },
+  {
+    slug: 'logex',
+    title: 'Logex',
+    description: 'Fotoproducto para catálogo: set de botellas y packshots listos para e-commerce.',
+    assets: ['logex fotoproducto b-4.jpg', 'logex fotoproducto b-7.jpg'],
+  },
+  {
+    slug: 'unaje',
+    title: 'Unaje',
+    description: 'Cobertura y contenido institucional para marca y activaciones especiales.',
+    assets: ['unaje portada.jpg'],
+  },
+  {
+    slug: 'productos',
+    title: 'Productos',
+    description: 'Serie de fotos de producto y composiciones para catálogo.',
+    assets: ['productos-1.jpg', 'productos-2.jpg', 'productos-7.jpg', 'productos-9.jpg'],
+  },
+  {
+    slug: 'flyer-historia',
+    title: 'Flyer Historia',
+    description: 'Flyer animado para redes y cápsulas de storytelling.',
+    assets: ['FLYER HISTORIA.mp4'],
+  },
+  {
+    slug: 'dji-0508-1',
+    title: 'DJI 0508 1',
+    description: 'Toma aérea capturada con dron DJI para campañas y contenido hero.',
+    assets: ['DJI_0508_1.mp4'],
+  },
+  {
+    slug: 'mockup-banner',
+    title: 'Mockup Banner',
+    description: 'Diseño de banner y mockups para activaciones digitales.',
+    assets: ['mockup banner.jpg'],
+  },
+  {
+    slug: 'reels-after-cata-final',
+    title: 'Reels After Cata Final',
+    description: 'Edición final de reels post cata pensados para redes sociales.',
+    assets: ['reels after cata final.mp4'],
+  },
 ]
+
+export const PROJECTS: Project[] = PROJECT_SPECS.map(createProject)

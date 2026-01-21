@@ -30,7 +30,14 @@ export const WorkShowcase: FC = () => {
                 </h2>
                 <div className="flex flex-col gap-8">
                     {PROJECTS.map((project) => (
-                        <WorkCard key={project.id} {...project} />
+                        <WorkCard
+                            key={project.slug}
+                            slug={project.slug}
+                            title={project.title}
+                            description={project.description}
+                            cover={project.cover}
+                            media={project.media}
+                        />
                     ))}
                 </div>
             </div>
@@ -62,8 +69,14 @@ export const WorkShowcase: FC = () => {
                                 className="flex gap-12 pl-4"
                             >
                                 {PROJECTS.map((project) => (
-                                    <div key={project.id} className="w-[400px] shrink-0">
-                                        <WorkCard {...project} />
+                                    <div key={project.slug} className="w-[400px] shrink-0">
+                                        <WorkCard
+                                            slug={project.slug}
+                                            title={project.title}
+                                            description={project.description}
+                                            cover={project.cover}
+                                            media={project.media}
+                                        />
                                     </div>
                                 ))}
                             </motion.div>

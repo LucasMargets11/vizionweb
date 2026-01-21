@@ -44,7 +44,14 @@ export const ProjectsPage: FC = () => {
         <section className="mt-12 md:mt-16">
           <div className="grid gap-8 md:grid-cols-2 md:gap-10">
             {PROJECTS.map((project) => (
-              <WorkCard key={project.id} {...project} />
+              <WorkCard
+                key={project.slug}
+                slug={project.slug}
+                title={project.title}
+                description={project.description}
+                cover={project.cover}
+                media={project.media}
+              />
             ))}
           </div>
         </section>

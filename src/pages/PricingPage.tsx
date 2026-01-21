@@ -13,6 +13,25 @@ const INDUSTRIES = [
   { id: 'content', labelKey: 'pages.pricing.industries.content' },
 ] as const
 
+type IndustryId = typeof INDUSTRIES[number]['id']
+type PackageIndustryId = Exclude<IndustryId, 'all'>
+
+type PackageId =
+  | 'landing'
+  | 'website'
+  | 'customSystem'
+  | 'brandStarter'
+  | 'brandSystem'
+  | 'videoSocialPack'
+  | 'launchVideo'
+  | 'eventCoverage'
+  | 'contentRetainer'
+
+type PackageDefinition = {
+  id: PackageId
+  industries: PackageIndustryId[]
+}
+
 const PACKAGE_DEFINITIONS = [
   // 🔹 Desarrollo / Web
   {
@@ -57,10 +76,7 @@ const PACKAGE_DEFINITIONS = [
     id: 'contentRetainer',
     industries: ['content'],
   },
-] as const
-
-type PackageDefinition = typeof PACKAGE_DEFINITIONS[number]
-type PackageId = PackageDefinition['id']
+] as const satisfies ReadonlyArray<PackageDefinition>
 
 const PACKAGE_FEATURE_KEYS: Record<PackageId, readonly string[]> = {
   landing: [
@@ -186,12 +202,14 @@ const PackageCard: FC<{ pkg: PackageDefinition }> = ({ pkg }) => {
 export const PricingPage: FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'quarterly'>('monthly')
   const [pricingView, setPricingView] = useState<'monthly' | 'packages'>('monthly')
-  const [selectedIndustry, setSelectedIndustry] = useState<string>('all')
+  const [selectedIndustry, setSelectedIndustry] = useState<IndustryId>('all')
+
+  const narrowedIndustry: PackageIndustryId | null = selectedIndustry === 'all' ? null : selectedIndustry
 
   const filteredPackages =
-    selectedIndustry === 'all'
+    narrowedIndustry === null
       ? PACKAGE_DEFINITIONS
-      : PACKAGE_DEFINITIONS.filter((pkg) => pkg.industries.includes(selectedIndustry))
+      : PACKAGE_DEFINITIONS.filter((pkg) => pkg.industries.some((industry) => industry === narrowedIndustry))
 
   const industryNavItems: NavItem[] =
     pricingView === 'packages'
@@ -247,8 +265,8 @@ export const PricingPage: FC = () => {
             <button
               onClick={() => setPricingView('monthly')}
               className={`rounded-lg px-6 py-2.5 text-sm font-bold transition-all ${pricingView === 'monthly'
-                  ? 'bg-slate-900 text-white shadow-md'
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                ? 'bg-slate-900 text-white shadow-md'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                 }`}
             >
               {t('pages.pricing.toggles.monthly')}
@@ -256,8 +274,8 @@ export const PricingPage: FC = () => {
             <button
               onClick={() => setPricingView('packages')}
               className={`rounded-lg px-6 py-2.5 text-sm font-bold transition-all ${pricingView === 'packages'
-                  ? 'bg-slate-900 text-white shadow-md'
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                ? 'bg-slate-900 text-white shadow-md'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                 }`}
             >
               {t('pages.pricing.toggles.packages')}
@@ -287,8 +305,8 @@ export const PricingPage: FC = () => {
                   <button
                     onClick={() => setBillingCycle('monthly')}
                     className={`rounded-full px-6 py-2 text-sm font-semibold transition-all ${billingCycle === 'monthly'
-                        ? 'bg-white text-slate-900 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-900'
+                      ? 'bg-white text-slate-900 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900'
                       }`}
                   >
                     {t('pages.pricing.billing.monthly')}
@@ -296,8 +314,8 @@ export const PricingPage: FC = () => {
                   <button
                     onClick={() => setBillingCycle('quarterly')}
                     className={`rounded-full px-6 py-2 text-sm font-semibold transition-all ${billingCycle === 'quarterly'
-                        ? 'bg-white text-slate-900 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-900'
+                      ? 'bg-white text-slate-900 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900'
                       }`}
                   >
                     {t('pages.pricing.billing.quarterly')}{' '}
@@ -438,8 +456,8 @@ export const PricingPage: FC = () => {
                           type="button"
                           onClick={() => setSelectedIndustry(item.id)}
                           className={`whitespace-nowrap rounded-full border px-3 py-1 text-xs transition ${isActive
-                              ? 'border-slate-900 bg-slate-900 text-white'
-                              : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
+                            ? 'border-slate-900 bg-slate-900 text-white'
+                            : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
                             }`}
                         >
                           {t(item.labelKey)}
