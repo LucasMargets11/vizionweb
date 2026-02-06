@@ -53,6 +53,32 @@ const SERVICES = [
                 <rect x="20" y="20" width="30" height="30" className="fill-blue-500" />
             </svg>
         )
+    },
+    {
+        titleKey: 'sections.services.cards.marketingGrowth.title',
+        descriptionKey: 'sections.services.cards.marketingGrowth.description',
+        id: 'marketing-growth',
+        icon: (
+            <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" className="fill-emerald-50" />
+                <path d="M20 80 L40 60 L60 70 L80 30" stroke="currentColor" strokeWidth="8" strokeLinecap="round" className="stroke-emerald-500" />
+                <circle cx="80" cy="30" r="10" className="fill-emerald-400" />
+                <rect x="70" y="70" width="20" height="20" className="fill-teal-300" />
+            </svg>
+        )
+    },
+    {
+        titleKey: 'sections.services.cards.consultingSupport.title',
+        descriptionKey: 'sections.services.cards.consultingSupport.description',
+        id: 'consulting-support',
+        icon: (
+            <svg viewBox="0 0 100 100" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" className="fill-violet-50" />
+                <rect x="25" y="30" width="40" height="40" rx="8" className="fill-violet-200" />
+                <rect x="45" y="45" width="40" height="40" rx="8" className="fill-violet-600" />
+                <circle cx="75" cy="30" r="10" className="fill-fuchsia-400" />
+            </svg>
+        )
     }
 ]
 

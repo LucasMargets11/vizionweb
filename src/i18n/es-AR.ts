@@ -110,8 +110,16 @@ export const esAR = {
           description: 'Integraciones, flujos y bots que ahorran tiempo y convierten mejor tus oportunidades.',
         },
         strategyBranding: {
-          title: 'Estrategia & consultoría digital',
+          title: 'Estrategia & Branding',
           description: 'Acompañamiento para alinear contenido, medios y datos con tus objetivos de negocio.',
+        },
+        marketingGrowth: {
+          title: 'Marketing Digital & Growth',
+          description: 'Estrategias de adquisición y posicionamiento para llevar tráfico cualificado y maximizar conversiones.',
+        },
+        consultingSupport: {
+          title: 'Consultoría & Soporte',
+          description: 'Acompañamiento a largo plazo, mantenimiento técnico y asesoría estratégica para su transformación digital.',
         },
       },
     },

@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react'
+import { useState, useEffect, type FC } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ScheduleCallModal } from './ScheduleCallModal'
 import { t } from '../../i18n'
@@ -28,9 +28,21 @@ const Header: FC<HeaderProps> = ({ secondaryNavItems, secondaryNavClassName }) =
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false)
 
+    // Lock body scroll when menu is open
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [isMenuOpen])
+
     return (
         <>
-            <header className="bg-white">
+            <header className="bg-white relative z-40">
                 <div className="flex w-full items-start justify-between px-6 py-6 md:px-12">
                     <a href="/" className="flex items-center pt-1">
                         <img src="/icon/logovizion.svg" alt="Vizion Studio" className="h-10 w-auto md:h-14" />
@@ -95,31 +107,64 @@ const Header: FC<HeaderProps> = ({ secondaryNavItems, secondaryNavClassName }) =
                         </span>
                     </button>
                 </div>
+            </header>
 
-                <div className={`${isMenuOpen ? 'max-h-60' : 'max-h-0'} overflow-hidden border-t border-slate-200 bg-white transition-[max-height] duration-300 md:hidden`}>
-                    <nav className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-4 text-sm font-semibold uppercase tracking-[0.3em] text-slate-900">
-                        {NAV_LINKS.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="py-1 transition-colors hover:text-blue-600"
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 z-50 flex h-[100dvh] flex-col bg-white"
+                    >
+                        {/* Mobile Header (Logo + Close) */}
+                        <div className="flex w-full shrink-0 items-start justify-between px-6 py-6 pt-7">
+                            <a href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center">
+                                <img src="/icon/logovizion.svg" alt="Vizion Studio" className="h-10 w-auto" />
+                            </a>
+                            <button
+                                type="button"
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-900"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                {t(link.labelKey)}
-                            </a>
-                        ))}
-                        <button
-                            onClick={() => {
-                                setIsMenuOpen(false)
-                                setIsScheduleModalOpen(true)
-                            }}
-                            className="rounded-full bg-blue-600 px-6 py-3 text-center text-xs font-semibold uppercase tracking-[0.35em] text-white w-full"
-                        >
-                            {t('header.scheduleCallMobile')}
-                        </button>
-                    </nav>
-                </div>
-            </header>
+                                <span className="sr-only">Cerrar menú</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+
+                        {/* Scrollable Links */}
+                        <nav className="flex flex-1 flex-col justify-center gap-6 overflow-y-auto px-6 pb-4">
+                            {NAV_LINKS.map((link) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    className="text-2xl font-bold uppercase tracking-[0.1em] text-slate-900 transition-colors hover:text-blue-600"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    {t(link.labelKey)}
+                                </a>
+                            ))}
+                        </nav>
+
+                        {/* Sticky Bottom CTA */}
+                        <div className="sticky bottom-0 mt-auto w-full border-t border-slate-100 bg-white px-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-4">
+                            <button
+                                onClick={() => {
+                                    setIsMenuOpen(false)
+                                    setIsScheduleModalOpen(true)
+                                }}
+                                className="w-full rounded-full bg-blue-600 px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg transition hover:bg-blue-700"
+                            >
+                                {t('header.scheduleCallMobile')}
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             <ScheduleCallModal
                 isOpen={isScheduleModalOpen}
