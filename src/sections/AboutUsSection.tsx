@@ -19,7 +19,7 @@ const CONTENT = {
 };
 
 // Switch to true when the 3D robot should return to the About Us section
-const SHOW_ABOUT_US_ROBOT = false;
+const SHOW_ABOUT_US_ROBOT = true;
 
 // --- Robot Model Component ---
 interface RobotModelProps {

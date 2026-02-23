@@ -8,7 +8,7 @@ import { RobotModel, Loader } from '../components/RobotModel';
 import { t } from '../i18n';
 
 // Toggle to re-enable the 3D robot on the About page when needed
-const SHOW_ABOUT_PAGE_ROBOT = false;
+const SHOW_ABOUT_PAGE_ROBOT = true;
 
 export const AboutPage: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
